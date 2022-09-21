@@ -1,13 +1,21 @@
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ValidateStu extends Search {
     ValidateStu() {
         Validate.addActionListener(this);
+        
+        System.out.println("clicked");
+
+        
     }
 
     int validate_Student(String Rg) {
@@ -32,6 +40,45 @@ public class ValidateStu extends Search {
             return 0;
         }
     }
+    void validatestud(){
+        
+        String getUname = Uname.getText();
+        int flg1 = 0;
+        try {
+            Pswd.setText("*****************");
+            File file = new File("C:\\Users\\DELL\\Desktop\\myWorkSpace\\javaprogs\\Students\\20KD1A05D1.txt");
+            Scanner sc = new Scanner(file);
+            ArrayList<String> details = new ArrayList<String>();
+            while (sc.hasNextLine()) {
+                details.add(sc.nextLine());
+            }
+            if (getUname.equalsIgnoreCase(details.get(4)))
+                flg1 = 1;
+            else
+                flg1 = 0;
+        } catch (FileNotFoundException e1) {
+            JLabel msg = new JLabel("Invalid Login credentials");
+            msg.setForeground(Color.red);
+            msg.setFont(font);
+            msg.setBounds(450, 520, 400, 40);
+            tb.p2.add(msg);
+        }
+        if (flg1 == 0) {
+            JLabel msg = new JLabel("Invalid Login credentials");
+            msg.setFont(font);
+            msg.setBounds(450, 520, 400, 40);
+            msg.setForeground(Color.red);
+            tb.p2.add(msg);
+
+        } else {
+            JLabel msg = new JLabel("Login Successfull");
+            msg.setFont(font);
+            msg.setForeground(Color.green);
+            msg.setBounds(500, 520, 400, 40);
+            tb.p2.add(msg);
+        }
+    }
+        
 
     public void actionPerformed(ActionEvent e) {
         int flg;
@@ -57,18 +104,26 @@ public class ValidateStu extends Search {
                 Pwd.setBounds(300, 360, 250, 50);
                 Pswd.setBounds(600, 360, 300, 50);
                 lgn.setBounds(500, 450, 200, 40);
+                // lgn.addActionListener(this);
+                
 
                 tb.p2.add(Username);
                 tb.p2.add(Pwd);
                 tb.p2.add(Uname);
                 tb.p2.add(Pswd);
                 tb.p2.add(lgn);
-            }
-            else{
+            } else {
                 JOptionPane.showMessageDialog(Rgn, this, "Invalid RegistrationNo", flg, null);
             }
+            
+
         } else if (e.getSource() == srch) {
             srch.setText("Student Found");
+            try {
+                display(name.getText());
+            } catch (FileNotFoundException e1) {
+               System.out.println("error");
+            }
         } else if (e.getSource() == submit) {
             submit.setText("Submitted");
             Fnm = fn.getText();
@@ -85,6 +140,11 @@ public class ValidateStu extends Search {
             System.out.println("Skills: " + sk);
             new AddStudents(Fnm, Lnm, Rg, gen, Em, addr, sk);
             System.out.println("student added");
+        } else if (e.getSource() == lgn)
+        {
+            validatestud();
         }
+        lgn.addActionListener(this);
     }
+    
 }
