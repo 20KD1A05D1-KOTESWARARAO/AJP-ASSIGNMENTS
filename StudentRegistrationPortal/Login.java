@@ -22,16 +22,14 @@ public class Login extends GetDetails {
         Validate = new JButton("Validate");
         Validate.setFont(font);
         Validate.setBounds(500, 170, 200, 40);
-        Validate.addActionListener(this);
+        // Validate.addActionListener(this);
 
         tb.p2.add(Reg_No);
         tb.p2.add(Rgn);
         tb.p2.add(Validate);
 
     }
-
     
-        
     }
 
     
